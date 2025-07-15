@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
       <nav className="space-y-4">
         <Link
-          href="/"
+          href="/dashboard"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaHome className="text-xl" />
@@ -148,12 +148,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       md:${isOpen ? "inline-block" : "hidden"}
     `}
           >
-            Beranda
+            Peringkat
           </span>
         </Link>
 
         <Link
-          href="/forum"
+          href="/dashboard/forum"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaUser className="text-xl" />

@@ -62,7 +62,7 @@ export default function ClientRoot({
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-50">
         <div className="text-center">
           <p className="text-gray-700 dark:text-gray-300 font-medium mb-2">
-            Memuat data pengguna...
+            Belajar Koding, Bangun Masa Depan.
           </p>
           <ProgressBar mode="indeterminate" style={{ height: "6px" }} />
         </div>
