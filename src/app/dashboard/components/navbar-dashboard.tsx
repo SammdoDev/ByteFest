@@ -18,20 +18,16 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
     
-    // Ambil nama user dari localStorage
     const storedName = localStorage.getItem("username");
     setUserName(storedName || "");
 
-    // Check current theme
     const isDark = document.documentElement.classList.contains('dark');
     setDarkMode(isDark);
   }, []);
 
-  // Menutup dropdown jika klik di luar
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -70,7 +66,6 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
     }
   };
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <nav className="bg-card shadow-md px-6 py-3 flex justify-between items-center w-full border-b border-border">

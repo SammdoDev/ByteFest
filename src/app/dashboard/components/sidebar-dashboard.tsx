@@ -6,13 +6,14 @@ import {
   FaUserGraduate,
   FaClipboardList,
   FaChartLine,
-  FaUsers,
   FaSignOutAlt,
   FaTimes,
   FaUser,
 } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+  import { signOut } from "firebase/auth";
+  import { auth } from "@/lib/firebase";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -22,9 +23,11 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const router = useRouter();
 
-  const handleLogout = () => {
+
+  const handleLogout = async () => {
+    await signOut(auth);
     localStorage.removeItem("username");
-    router.push("/auth/login");
+    router.push("/");
   };
 
   const NavItem = ({
@@ -65,7 +68,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       `}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">{isOpen ? "Eduverse" : "E"}</h2>
+        <div className="flex items-center space-x-2 justify-center">
+          <img
+            src="/logo.png"
+            alt="Eduverse Logo"
+            className={`object-contain ${isOpen ? "h-8" : "h-8 w-8 mx-auto "}`}
+          />
+          {isOpen && <h2 className="text-xl font-bold">Eduverse</h2>}
+        </div>
+
         <button
           onClick={toggleSidebar}
           className="text-white hover:text-gray-200 md:hidden"
@@ -157,21 +168,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </span>
         </Link>
 
-        <button
+        <div
           onClick={handleLogout}
-          className="flex items-center gap-3 hover:bg-blue-600 p-2 rounded mt-6"
+          className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all cursor-pointer mt-6"
         >
-          <FaSignOutAlt />
+          <FaSignOutAlt className="text-xl" />
           <span
             className={`
-              ${!isOpen && "hidden md:inline-block"}
-              ${!isOpen ? "md:opacity-0" : "opacity-100"}
-              transition-all duration-300 ease-in-out
-            `}
+      transition-all duration-200 
+      ${isOpen ? "inline-block" : "hidden"} 
+      md:${isOpen ? "inline-block" : "hidden"}
+    `}
           >
             Logout
           </span>
-        </button>
+        </div>
       </nav>
     </div>
   );

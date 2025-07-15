@@ -12,6 +12,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/logo.png",
+  },
   title: "CodeWithSamm",
   description: "Belajar dasar dasar Pemrograman",
 };
