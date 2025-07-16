@@ -68,9 +68,9 @@ export default function KuisPage() {
   }, []);
 
   return (
-    <main className="p-2 md:p-6 w-full mx-auto">
+    <main className="p-3 md:p-6 w-full mx-auto">
       <h1 className="text-3xl font-bold text-blue-600 mb-6">Daftar Kuis</h1>
-      <p className="text-gray-700 mb-6">
+      <p className="text-white mb-6">
         Pilih topik yang ingin kamu kerjakan dan lihat skor terakhirmu.
       </p>
 

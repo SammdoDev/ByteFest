@@ -85,7 +85,7 @@ export default function DashboardLayout({
       </div>
       <div className="flex flex-col flex-1 min-w-0">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto flex flex-col">
           <div className="h-full">{children}</div>
         </main>
       </div>

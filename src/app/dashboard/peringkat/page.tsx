@@ -107,7 +107,7 @@ const LeaderboardPage: React.FC = () => {
   }
 
   return (
-    <main className="p-0 md:p-6 max-w-full">
+    <main className="p-3 md:p-6 max-w-full">
       <h1 className="text-3xl font-bold text-blue-600 mb-6">Leaderboard</h1>
 
       <div className="overflow-x-auto rounded-xl border border-gray-300">

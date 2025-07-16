@@ -59,7 +59,6 @@ export default function ForumChat() {
 
     const { scrollTop, scrollHeight, clientHeight } = container;
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 100;
-
     setIsUserAtBottom(isAtBottom);
     setShowScrollButton(!isAtBottom);
   };
@@ -83,6 +82,7 @@ export default function ForumChat() {
 
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
+
     const unsub = onSnapshot(q, async (snap) => {
       const data: Msg[] = await Promise.all(
         snap.docs.map(async (docSnap) => {
@@ -162,31 +162,24 @@ export default function ForumChat() {
               </div>
             </div>
           )}
-          <div
-            className={`flex ${
-              m.uid === userUid ? "justify-end" : "justify-start"
-            }`}
-          >
+
+          <div className={`flex ${m.uid === userUid ? "justify-end" : "justify-start"}`}>
             <div
               className={`relative px-4 py-2 rounded-[18px] text-sm break-words shadow-sm 
-    ${
-      m.uid === userUid
-        ? "bg-[#dcf8c6] text-black self-end rounded-br-none"
-        : "bg-white text-black self-start rounded-bl-none"
-    } 
-    min-w-[100px] max-w-[90%] sm:max-w-[85%] md:max-w-[75%] lg:max-w-[70%]`}
+                ${m.uid === userUid
+                  ? "bg-[#dcf8c6] text-black self-end rounded-br-none"
+                  : "bg-white text-black self-start rounded-bl-none"}
+                min-w-[100px] max-w-[90%] sm:max-w-[85%] md:max-w-[75%] lg:max-w-[70%]`}
             >
-              <div className="text-[11px] text-gray-600 font-medium mb-1 flex flex-row justify-between space-x-4">
+              <div className="text-[11px] text-gray-600 font-medium mb-1 flex justify-between space-x-4">
                 {m.uid === userUid ? "You" : m.username}
                 {m.createdAt && (
-                  <div className="text-[10px] text-gray-500 text-right">
+                  <span className="text-[10px] text-gray-500">
                     {dayjs(m.createdAt).format("HH:mm")}
-                  </div>
+                  </span>
                 )}
               </div>
-              <div className="whitespace-pre-wrap leading-relaxed">
-                {m.text}
-              </div>
+              <div className="whitespace-pre-wrap leading-relaxed">{m.text}</div>
             </div>
           </div>
         </div>
@@ -195,30 +188,25 @@ export default function ForumChat() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-
-      <div className="flex-1 overflow-hidden">
-        <div
-          ref={messagesContainerRef}
-          className="h-full md:max-h-300px overflow-y-auto p-3 space-y-2"
-        >
-          <div className="min-h-full flex flex-col justify-end">
-            {renderMessages()}
-            <div ref={bottomRef} className="h-1" />
-          </div>
+    <div className="h-full flex flex-col pt-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+      <div
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-3 space-y-2"
+      >
+        <div className="flex flex-col justify-end min-h-full">
+          {renderMessages()}
+          <div ref={bottomRef} className="h-1" />
         </div>
-
-        {showScrollButton && (
-          <div className="absolute bottom-4 right-4 z-10">
-            <button
-              onClick={scrollToBottom}
-              className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
-            >
-              <FaArrowDown size={16} />
-            </button>
-          </div>
-        )}
       </div>
+
+      {showScrollButton && (
+        <button
+          onClick={scrollToBottom}
+          className="fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-10"
+        >
+          <FaArrowDown size={16} />
+        </button>
+      )}
 
       <div className="bg-slate-800/80 backdrop-blur-sm border-t border-slate-700 p-3">
         <form
@@ -241,11 +229,7 @@ export default function ForumChat() {
               placeholder="Ketik pesan.."
               className="w-full px-3 py-2 rounded-lg bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all duration-200 text-sm min-h-[40px] max-h-[120px]"
               rows={1}
-              style={{
-                height: "auto",
-                minHeight: "40px",
-                maxHeight: "120px",
-              }}
+              style={{ height: "auto", minHeight: "40px", maxHeight: "120px" }}
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
                 target.style.height = "auto";

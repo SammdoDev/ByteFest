@@ -118,7 +118,6 @@ export default function MateriPage() {
 
         setUserLevel(currentLevel);
 
-        // Simpan ke /users/{uid}
         await setDoc(userRef, { level: currentLevel }, { merge: true });
       }
     });
@@ -127,7 +126,7 @@ export default function MateriPage() {
   }, []);
 
   return (
-    <main className="p-1 md:p-6 w-full mx-auto text-white bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen">
+    <main className="p-3 md:p-6 w-full mx-auto text-white bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen">
       <h1 className="text-4xl font-bold text-sky-400 mb-2">Pilih Materi</h1>
       <p className="text-gray-300 text-lg">
         Mulailah perjalanan belajarmu dari dasar hingga mahir dengan berbagai topik pemrograman populer.

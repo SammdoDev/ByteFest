@@ -78,7 +78,7 @@ const modules: ModuleCardProps[] = [
 
 const DashboardContent: React.FC<DashboardContentProps> = ({ user, level }) => {
   return (
-    <main className="flex-1 p-1 md:p-6 w-full bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen text-white">
+    <main className="flex-1 p-3 md:p-6 w-full bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen text-white">
       <h1 className="text-4xl font-extrabold text-sky-400 mb-2">
         Selamat Datang, {user} 👋
       </h1>
