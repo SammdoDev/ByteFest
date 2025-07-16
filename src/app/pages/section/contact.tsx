@@ -13,7 +13,7 @@ const ContactSection: React.FC = () => {
 
         <div>
           <h4 className="font-semibold text-white mb-2">Navigasi</h4>
-          <ul className="space-y-1 text-sm">
+          <ul className="space-y-1 text-sm scroll-smooth">
             <li><a href="#beranda" className="hover:text-blue-400">Beranda</a></li>
             <li><a href="#about" className="hover:text-blue-400">Tentang Kami</a></li>
             <li><a href="#promo" className="hover:text-blue-400">Promo</a></li>
