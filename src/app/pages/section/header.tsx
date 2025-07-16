@@ -20,7 +20,7 @@ const HeaderSection: React.FC = () => {
   }, []);
 
   const handleScrollDown = () => {
-    const target = document.getElementById("modul");
+    const target = document.getElementById("about");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }

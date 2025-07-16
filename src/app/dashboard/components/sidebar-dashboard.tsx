@@ -3,13 +3,13 @@
 import React from "react";
 import {
   FaHome,
-  FaUserGraduate,
   FaClipboardList,
   FaChartLine,
   FaSignOutAlt,
   FaTimes,
-  FaUser,
   FaArrowLeft,
+  FaCommentDots,
+  FaBook,
 } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -109,7 +109,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           href="/dashboard/materi"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
-          <FaUserGraduate className="text-xl" />
+          <FaBook className="text-xl" />
           <span
             className={`
       transition-all duration-200 
@@ -156,7 +156,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           href="/dashboard/forum"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
-          <FaUser className="text-xl" />
+          <FaCommentDots className="text-xl" />
           <span
             className={`
       transition-all duration-200 

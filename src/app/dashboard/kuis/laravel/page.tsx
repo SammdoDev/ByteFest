@@ -9,19 +9,19 @@ import QuizOption from "../components/QuizOption";
 import QuizFinish from "../components/QuizFinish";
 
 const questions = [
-  { question: "Tag untuk gambar adalah?", options: ["<link>", "<img>", "<a>", "<div>"], answer: "<img>" },
-  { question: "Tag heading terbesar?", options: ["<h6>", "<h1>", "<h3>", "<h4>"], answer: "<h1>" },
-  { question: "Tag list tak berurutan?", options: ["<ul>", "<ol>", "<li>", "<list>"], answer: "<ul>" },
-  { question: "Elemen untuk membuat baris tabel?", options: ["<tr>", "<td>", "<th>", "<table>"], answer: "<tr>" },
-  { question: "Input teks pendek pakai tag?", options: ["<textarea>", "<input>", "<text>", "<form>"], answer: "<input>" },
-  { question: "Tag pilihan dropdown?", options: ["<checkbox>", "<select>", "<dropdown>", "<input>"], answer: "<select>" },
-  { question: "Elemen untuk paragraf?", options: ["<div>", "<p>", "<text>", "<span>"], answer: "<p>" },
-  { question: "Atribut gambar untuk teks alternatif?", options: ["src", "href", "alt", "value"], answer: "alt" },
-  { question: "Tag hyperlink adalah?", options: ["<a>", "<link>", "<url>", "<href>"], answer: "<a>" },
-  { question: "Penutup form menggunakan tag?", options: ["</form>", "<form/>", "</form/>", "<endform>"], answer: "</form>" },
+  { question: "Perintah untuk membuat project Laravel baru?", options: ["composer create-project laravel", "laravel new", "php artisan new", "npm create laravel"], answer: "laravel new" },
+  { question: "File konfigurasi utama Laravel?", options: ["config.php", ".env", "app.php", "config.json"], answer: ".env" },
+  { question: "Command untuk menjalankan server lokal Laravel?", options: ["php artisan serve", "laravel start", "npm run dev", "php server"], answer: "php artisan serve" },
+  { question: "Folder tempat controller berada?", options: ["resources/views", "routes/", "app/Controllers", "app/Http/Controllers"], answer: "app/Http/Controllers" },
+  { question: "Command untuk membuat model di Laravel?", options: ["php artisan make:model", "php make model", "artisan create model", "php artisan generate:model"], answer: "php artisan make:model" },
+  { question: "File untuk mendefinisikan rute web?", options: ["routes/api.php", "web.php", "routes/web.php", "app/routes.php"], answer: "routes/web.php" },
+  { question: "Blade adalah?", options: ["CSS preprocessor", "Database engine", "Templating engine", "Middleware"], answer: "Templating engine" },
+  { question: "Apa fungsi dari CSRF token di Laravel?", options: ["Enkripsi password", "Proteksi dari spam", "Validasi form", "Keamanan dari serangan form palsu"], answer: "Keamanan dari serangan form palsu" },
+  { question: "Command untuk membuat migration?", options: ["php artisan make:migration", "php artisan migrate:make", "php make migration", "php artisan create:migration"], answer: "php artisan make:migration" },
+  { question: "Perintah untuk menjalankan migration?", options: ["php artisan db:migrate", "php artisan migrate", "php migrate", "php artisan migrate:run"], answer: "php artisan migrate" },
 ];
 
-export default function QuizHtml() {
+export default function QuizLaravel() {
   const [userId, setUserId] = useState<string | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export default function QuizHtml() {
         await setDoc(
           doc(db, "quizResults", userId),
           {
-            htmlScore: score + (selected === questions[current].answer ? 1 : 0),
+            laravelScore: score + (selected === questions[current].answer ? 1 : 0),
             updatedAt: new Date(),
           },
           { merge: true }
@@ -58,9 +58,9 @@ export default function QuizHtml() {
   };
 
   return (
-    <QuizLayout title="Kuis HTML">
+    <QuizLayout title="Kuis Laravel">
       {finished ? (
-        <QuizFinish topic="HTML" score={score} total={questions.length} />
+        <QuizFinish topic="Laravel" score={score} total={questions.length} />
       ) : (
         <>
           <p className="text-lg font-medium mb-4">Soal {current + 1} dari {questions.length}</p>

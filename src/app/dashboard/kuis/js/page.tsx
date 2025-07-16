@@ -9,19 +9,20 @@ import QuizOption from "../components/QuizOption";
 import QuizFinish from "../components/QuizFinish";
 
 const questions = [
-  { question: "Properti CSS untuk mengubah warna teks?", options: ["background", "text-color", "font-color", "color"], answer: "color" },
-  { question: "Properti untuk memberi jarak di dalam elemen?", options: ["margin", "gap", "padding", "spacing"], answer: "padding" },
-  { question: "Selektor untuk memilih elemen dengan id 'header'?", options: ["#header", ".header", "header", "$header"], answer: "#header" },
-  { question: "Properti untuk mengatur ukuran huruf?", options: ["font-size", "size", "text-size", "font"], answer: "font-size" },
-  { question: "Nilai properti 'display' untuk membuat flex container?", options: ["block", "inline", "grid", "flex"], answer: "flex" },
-  { question: "Properti untuk memberi garis di sekitar elemen?", options: ["border", "outline", "box", "frame"], answer: "border" },
-  { question: "Selector untuk semua elemen paragraf?", options: ["#p", "p", ".p", "<p>"], answer: "p" },
-  { question: "Properti untuk mengatur jarak luar elemen?", options: ["spacing", "margin", "padding", "gap"], answer: "margin" },
-  { question: "Unit CSS untuk persentase ukuran?", options: ["px", "em", "%", "rem"], answer: "%" },
-  { question: "Properti untuk mengatur latar belakang elemen?", options: ["color", "background", "bg", "fill"], answer: "background" },
+  { question: "Tipe data untuk nilai benar/salah?", options: ["boolean", "string", "number", "null"], answer: "boolean" },
+  { question: "Cara mendeklarasikan variabel?", options: ["var", "let", "const", "semua benar"], answer: "semua benar" },
+  { question: "Operator untuk pembanding identik?", options: ["==", "=", "===", "!="], answer: "===" },
+  { question: "Metode untuk mengubah string menjadi integer?", options: ["parseInt()", "parseFloat()", "Number()", "toInteger()"], answer: "parseInt()" },
+  { question: "Array bisa berisi?", options: ["String", "Number", "Boolean", "Semua benar"], answer: "Semua benar" },
+  { question: "Fungsi panah ditulis dengan simbol?", options: ["->", "=>", "::", "==>"], answer: "=>" },
+  { question: "Metode untuk mengulang array dan memodifikasi nilainya?", options: ["forEach()", "map()", "filter()", "find()"], answer: "map()" },
+  { question: "Nilai default dari variabel yang belum diinisialisasi?", options: ["null", "0", "undefined", "false"], answer: "undefined" },
+  { question: "Metode untuk menambahkan item ke akhir array?", options: ["push()", "pop()", "shift()", "concat()"], answer: "push()" },
+  { question: "Kata kunci untuk membuat fungsi?", options: ["func", "function", "fn", "def"], answer: "function" },
 ];
 
-export default function QuizCss() {
+
+export default function QuizJs() {
   const [userId, setUserId] = useState<string | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -40,7 +41,6 @@ export default function QuizCss() {
       setScore((prev) => prev + 1);
     }
     setSelected(null);
-
     if (current + 1 < questions.length) {
       setCurrent((prev) => prev + 1);
     } else {
@@ -49,7 +49,7 @@ export default function QuizCss() {
         await setDoc(
           doc(db, "quizResults", userId),
           {
-            cssScore: score + (selected === questions[current].answer ? 1 : 0),
+            jsScore: score + (selected === questions[current].answer ? 1 : 0),
             updatedAt: new Date(),
           },
           { merge: true }
@@ -59,17 +59,13 @@ export default function QuizCss() {
   };
 
   return (
-    <QuizLayout title="Kuis CSS">
+    <QuizLayout title="Kuis JavaScript">
       {finished ? (
-        <QuizFinish topic="CSS" score={score} total={questions.length} />
+        <QuizFinish topic="JavaScript" score={score} total={questions.length} />
       ) : (
         <>
-          <p className="text-lg font-medium mb-4">
-            Soal {current + 1} dari {questions.length}
-          </p>
-          <h2 className="text-xl font-semibold text-white mb-4">
-            {questions[current].question}
-          </h2>
+          <p className="text-lg font-medium mb-4">Soal {current + 1} dari {questions.length}</p>
+          <h2 className="text-xl font-semibold text-white mb-4">{questions[current].question}</h2>
 
           <div className="space-y-3">
             {questions[current].options.map((option, i) => (

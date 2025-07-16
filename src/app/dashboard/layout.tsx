@@ -61,11 +61,15 @@ export default function DashboardLayout({
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-80 text-center">
-          <p className="mb-4 text-gray-800 dark:text-gray-200 font-semibold">
-            Memuat data pengguna...
+        <div className="bg-white dark:bg-white shadow-md rounded-lg p-6 w-80 md:w-130 text-center">
+          <p className="mb-4 text-black font-semibold">
+            Satu Baris Kode, Satu Langkah Lebih Dekat ke Impian...
           </p>
-          <ProgressBar mode="indeterminate" style={{ height: "8px" }} />
+          <ProgressBar
+            mode="indeterminate"
+            style={{ height: "8px" }}
+            className="!bg-blue-100 !before:bg-blue-600"
+          />
         </div>
       </div>
     );
@@ -81,10 +85,8 @@ export default function DashboardLayout({
       </div>
       <div className="flex flex-col flex-1 min-w-0">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="flex-1 p-6 overflow-y-auto">
-          <div className="h-full">
-            {children}
-          </div>
+        <main className="flex-1 overflow-y-auto">
+          <div className="h-full">{children}</div>
         </main>
       </div>
     </div>

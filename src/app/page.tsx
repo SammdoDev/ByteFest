@@ -1,16 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import Image from 'next/image';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import Navbar from './components/landing-page-navbar';
-import LandingPageContent from './components/landing-page-content';
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import Image from "next/image";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import Navbar from "./components/landing-page-navbar";
+import LandingPageContent from "./pages/landing-page-content";
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [section, setSection] = useState<'beranda' | 'about' | 'promo' | 'modul'>('beranda');
+  const [section, setSection] = useState<
+    "beranda" | "about" | "promo" | "modul"
+  >("beranda");
   const [showLanding, setShowLanding] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -33,7 +35,7 @@ export default function HomePage() {
     tl.to(progressValue, {
       value: 100,
       duration: 2,
-      ease: 'power2.out',
+      ease: "power2.out",
       onUpdate: () => {
         setProgress(Math.floor(progressValue.value));
       },

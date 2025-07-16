@@ -9,19 +9,20 @@ import QuizOption from "../components/QuizOption";
 import QuizFinish from "../components/QuizFinish";
 
 const questions = [
-  { question: "Properti CSS untuk mengubah warna teks?", options: ["background", "text-color", "font-color", "color"], answer: "color" },
-  { question: "Properti untuk memberi jarak di dalam elemen?", options: ["margin", "gap", "padding", "spacing"], answer: "padding" },
-  { question: "Selektor untuk memilih elemen dengan id 'header'?", options: ["#header", ".header", "header", "$header"], answer: "#header" },
-  { question: "Properti untuk mengatur ukuran huruf?", options: ["font-size", "size", "text-size", "font"], answer: "font-size" },
-  { question: "Nilai properti 'display' untuk membuat flex container?", options: ["block", "inline", "grid", "flex"], answer: "flex" },
-  { question: "Properti untuk memberi garis di sekitar elemen?", options: ["border", "outline", "box", "frame"], answer: "border" },
-  { question: "Selector untuk semua elemen paragraf?", options: ["#p", "p", ".p", "<p>"], answer: "p" },
-  { question: "Properti untuk mengatur jarak luar elemen?", options: ["spacing", "margin", "padding", "gap"], answer: "margin" },
-  { question: "Unit CSS untuk persentase ukuran?", options: ["px", "em", "%", "rem"], answer: "%" },
-  { question: "Properti untuk mengatur latar belakang elemen?", options: ["color", "background", "bg", "fill"], answer: "background" },
+  { question: "Apa itu React?", options: ["Framework CSS", "Library untuk backend", "Library JavaScript untuk UI", "Database NoSQL"], answer: "Library JavaScript untuk UI" },
+  { question: "Cara membuat komponen fungsional di React?", options: ["function MyComponent() {}", "component MyComponent {}", "def MyComponent():", "createComponent MyComponent"], answer: "function MyComponent() {}" },
+  { question: "Hook yang digunakan untuk state?", options: ["useEffect", "useState", "useRef", "useContext"], answer: "useState" },
+  { question: "Hook yang dipakai untuk efek samping (side effect)?", options: ["useState", "useEffect", "useCallback", "useMemo"], answer: "useEffect" },
+  { question: "Props digunakan untuk?", options: ["State lokal", "Routing", "Mengirim data antar komponen", "Gaya CSS"], answer: "Mengirim data antar komponen" },
+  { question: "State di React bersifat?", options: ["Global", "Immutable", "Mutable langsung", "Hanya di server"], answer: "Immutable" },
+  { question: "Bagaimana cara menampilkan nilai di JSX?", options: ["{{value}}", "{value}", "[[value]]", "<value>"], answer: "{value}" },
+  { question: "Hook yang digunakan untuk referensi elemen DOM?", options: ["useRef", "useMemo", "useReducer", "useLayout"], answer: "useRef" },
+  { question: "Cara menangani event klik?", options: ["onClick={handleClick}", "onclick='handleClick()'", "click={handleClick}", "@click='handleClick'"], answer: "onClick={handleClick}" },
+  { question: "React dibuat oleh?", options: ["Google", "Facebook", "Microsoft", "Twitter"], answer: "Facebook" },
 ];
 
-export default function QuizCss() {
+
+export default function QuizJs() {
   const [userId, setUserId] = useState<string | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -40,7 +41,6 @@ export default function QuizCss() {
       setScore((prev) => prev + 1);
     }
     setSelected(null);
-
     if (current + 1 < questions.length) {
       setCurrent((prev) => prev + 1);
     } else {
@@ -49,7 +49,7 @@ export default function QuizCss() {
         await setDoc(
           doc(db, "quizResults", userId),
           {
-            cssScore: score + (selected === questions[current].answer ? 1 : 0),
+            jsScore: score + (selected === questions[current].answer ? 1 : 0),
             updatedAt: new Date(),
           },
           { merge: true }
@@ -59,17 +59,13 @@ export default function QuizCss() {
   };
 
   return (
-    <QuizLayout title="Kuis CSS">
+    <QuizLayout title="Kuis JavaScript">
       {finished ? (
-        <QuizFinish topic="CSS" score={score} total={questions.length} />
+        <QuizFinish topic="JavaScript" score={score} total={questions.length} />
       ) : (
         <>
-          <p className="text-lg font-medium mb-4">
-            Soal {current + 1} dari {questions.length}
-          </p>
-          <h2 className="text-xl font-semibold text-white mb-4">
-            {questions[current].question}
-          </h2>
+          <p className="text-lg font-medium mb-4">Soal {current + 1} dari {questions.length}</p>
+          <h2 className="text-xl font-semibold text-white mb-4">{questions[current].question}</h2>
 
           <div className="space-y-3">
             {questions[current].options.map((option, i) => (

@@ -10,11 +10,11 @@ import ContactSection from "./section/contact";
 export default function LandingPageContent() {
   return (
     <main className="px-0 overflow-y-auto scroll-smooth">
-      <HeaderSection/>
-      <AboutSection/>
-      <PromoSection/>
-      <ModuleSection/>
-      <ContactSection/>
+      <HeaderSection />
+      <AboutSection />
+      <PromoSection />
+      <ModuleSection />
+      <ContactSection />
     </main>
   );
 }

@@ -24,7 +24,7 @@ export default function LoginPage() {
         localStorage.setItem('username', userData.name || '');
       }
 
-      router.push('/');
+      router.push('/dashboard');
     } catch (error: any) {
       alert(error.message);
     }

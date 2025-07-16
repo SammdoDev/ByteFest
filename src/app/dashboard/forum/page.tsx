@@ -195,22 +195,12 @@ export default function ForumChat() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      <header className="bg-slate-800/80 backdrop-blur-sm border-b border-slate-700 flex-shrink-0">
-        <div className="p-3 text-center">
-          <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Forum Chat
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">
-            {messages.length} pesan • {userName || "Loading..."}
-          </p>
-        </div>
-      </header>
+    <div className="h-screen flex flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
 
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 overflow-hidden">
         <div
           ref={messagesContainerRef}
-          className="absolute inset-0 overflow-y-scroll p-3 space-y-2"
+          className="h-full md:max-h-300px overflow-y-auto p-3 space-y-2"
         >
           <div className="min-h-full flex flex-col justify-end">
             {renderMessages()}
@@ -230,7 +220,7 @@ export default function ForumChat() {
         )}
       </div>
 
-      <div className="bg-slate-800/80 backdrop-blur-sm border-t border-slate-700 p-3 flex-shrink-0">
+      <div className="bg-slate-800/80 backdrop-blur-sm border-t border-slate-700 p-3">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -248,7 +238,7 @@ export default function ForumChat() {
                   sendMessage();
                 }
               }}
-              placeholder="Ketik pesan... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+              placeholder="Ketik pesan.."
               className="w-full px-3 py-2 rounded-lg bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all duration-200 text-sm min-h-[40px] max-h-[120px]"
               rows={1}
               style={{

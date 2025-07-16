@@ -12,6 +12,7 @@ import {
   FaReact,
   FaLaravel,
   FaPython,
+  FaLock,
 } from 'react-icons/fa';
 
 type Category = {
@@ -126,7 +127,7 @@ export default function MateriPage() {
   }, []);
 
   return (
-    <main className="p-6 max-w-6xl mx-auto text-white bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen">
+    <main className="p-1 md:p-6 w-full mx-auto text-white bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen">
       <h1 className="text-4xl font-bold text-sky-400 mb-2">Pilih Materi</h1>
       <p className="text-gray-300 text-lg">
         Mulailah perjalanan belajarmu dari dasar hingga mahir dengan berbagai topik pemrograman populer.
@@ -175,7 +176,7 @@ export default function MateriPage() {
                 </Link>
               ) : (
                 <span className="block mt-3 text-gray-400 text-sm font-semibold italic">
-                  🔒 Tersedia setelah menyelesaikan Level {cat.level - 1}
+                  <FaLock/> Tersedia setelah menyelesaikan Level {cat.level - 1}
                 </span>
               )}
             </div>
