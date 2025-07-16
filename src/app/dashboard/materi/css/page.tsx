@@ -12,7 +12,7 @@ const cssTopics = [
   {
     title: "Cara Menyisipkan CSS",
     description: "Inline, internal, dan external CSS.",
-    slug: "cara-menyisipkan",
+    slug: "import-css",
   },
   {
     title: "Selektor CSS",

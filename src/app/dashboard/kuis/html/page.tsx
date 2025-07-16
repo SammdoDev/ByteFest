@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import QuizLayout from "../components/QuizLayout";
+import QuizOption from "../components/QuizOption";
+import QuizFinish from "../components/QuizFinish";
 
 const questions = [
   { question: "Tag untuk gambar adalah?", options: ["<link>", "<img>", "<a>", "<div>"], answer: "<img>" },
@@ -41,44 +44,36 @@ export default function QuizHtml() {
       setCurrent((prev) => prev + 1);
     } else {
       setFinished(true);
-
-      // Simpan ke Firestore
       if (userId) {
-        await setDoc(doc(db, "quizResults", userId), {
-          htmlScore: score + (selected === questions[current].answer ? 1 : 0),
-          updatedAt: new Date(),
-        }, { merge: true });
+        await setDoc(
+          doc(db, "quizResults", userId),
+          {
+            htmlScore: score + (selected === questions[current].answer ? 1 : 0),
+            updatedAt: new Date(),
+          },
+          { merge: true }
+        );
       }
     }
   };
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">Kuis HTML</h1>
-
+    <QuizLayout title="Kuis HTML">
       {finished ? (
-        <div className="bg-green-50 border border-green-300 p-6 rounded-xl text-center">
-          <h2 className="text-2xl font-semibold text-green-600 mb-4">Skor Kamu: {score} / {questions.length}</h2>
-          <p className="text-gray-700">Hasilmu telah disimpan. Terus semangat belajar! 🚀</p>
-        </div>
+        <QuizFinish score={score} total={questions.length} />
       ) : (
-        <div>
+        <>
           <p className="text-lg font-medium mb-4">Soal {current + 1} dari {questions.length}</p>
           <h2 className="text-xl font-semibold text-gray-800 mb-4">{questions[current].question}</h2>
 
           <div className="space-y-3">
             {questions[current].options.map((option, i) => (
-              <button
+              <QuizOption
                 key={i}
+                option={option}
+                isSelected={selected === option}
                 onClick={() => setSelected(option)}
-                className={`block w-full text-left px-4 py-2 rounded-lg border transition ${
-                  selected === option
-                    ? "bg-blue-100 border-blue-500"
-                    : "border-gray-300 hover:bg-gray-100"
-                }`}
-              >
-                {option}
-              </button>
+              />
             ))}
           </div>
 
@@ -89,8 +84,8 @@ export default function QuizHtml() {
           >
             {current === questions.length - 1 ? "Lihat Hasil" : "Selanjutnya"}
           </button>
-        </div>
+        </>
       )}
-    </main>
+    </QuizLayout>
   );
 }

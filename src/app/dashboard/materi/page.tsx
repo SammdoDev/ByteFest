@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { auth, db } from "@/lib/firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { auth, db } from '@/lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import {
   FaHtml5,
   FaCss3Alt,
@@ -12,7 +12,7 @@ import {
   FaReact,
   FaLaravel,
   FaPython,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 type Category = {
   name: string;
@@ -25,85 +25,100 @@ type Category = {
 
 const categories: Category[] = [
   {
-    name: "HTML",
-    field: "htmlScore",
+    name: 'HTML',
+    field: 'htmlScore',
     icon: <FaHtml5 className="text-orange-500 text-3xl" />,
-    href: "/dashboard/materi/html",
+    href: '/dashboard/materi/html',
     level: 1,
-    description: "Belajar struktur dasar halaman web menggunakan HTML.",
+    description: 'Belajar struktur dasar halaman web menggunakan HTML.',
   },
   {
-    name: "CSS",
-    field: "cssScore",
+    name: 'CSS',
+    field: 'cssScore',
     icon: <FaCss3Alt className="text-blue-500 text-3xl" />,
-    href: "/dashboard/materi/css",
+    href: '/dashboard/materi/css',
     level: 1,
-    description: "Pelajari cara mengatur tampilan website dengan CSS.",
+    description: 'Pelajari cara mengatur tampilan website dengan CSS.',
   },
   {
-    name: "Python",
-    field: "pythonScore",
+    name: 'Python',
+    field: 'pythonScore',
     icon: <FaPython className="text-yellow-500 text-3xl" />,
-    href: "/dashboard/materi/python",
+    href: '/dashboard/materi/python',
     level: 2,
-    description: "Bahasa pemrograman populer untuk web, data, dan automasi.",
+    description: 'Bahasa pemrograman populer untuk web, data, dan automasi.',
   },
   {
-    name: "JavaScript",
-    field: "jsScore",
+    name: 'JavaScript',
+    field: 'jsScore',
     icon: <FaJs className="text-yellow-400 text-3xl" />,
-    href: "/dashboard/materi/javascript",
+    href: '/dashboard/materi/javascript',
     level: 3,
-    description: "Tambahkan interaktivitas pada website menggunakan JavaScript.",
+    description: 'Tambahkan interaktivitas pada website menggunakan JavaScript.',
   },
   {
-    name: "React",
-    field: "reactScore",
+    name: 'React',
+    field: 'reactScore',
     icon: <FaReact className="text-cyan-400 text-3xl" />,
-    href: "/dashboard/materi/react",
+    href: '/dashboard/materi/react',
     level: 4,
-    description: "Bangun antarmuka dinamis dengan library React JS.",
+    description: 'Bangun antarmuka dinamis dengan library React JS.',
   },
   {
-    name: "Laravel",
-    field: "laravelScore",
+    name: 'Laravel',
+    field: 'laravelScore',
     icon: <FaLaravel className="text-red-500 text-3xl" />,
-    href: "/dashboard/materi/laravel",
+    href: '/dashboard/materi/laravel',
     level: 5,
-    description: "Framework PHP modern untuk membangun backend aplikasi web.",
+    description: 'Framework PHP modern untuk membangun backend aplikasi web.',
   },
 ];
 
 export default function MateriPage() {
   const [scores, setScores] = useState<Record<string, number>>({});
-  const [userId, setUserId] = useState<string | null>(null);
   const [userLevel, setUserLevel] = useState(1);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserId(user.uid);
-        const docSnap = await getDoc(doc(db, "quizResults", user.uid));
-        if (docSnap.exists()) {
-          const data = docSnap.data() as Record<string, number>;
-          setScores(data);
+        const uid = user.uid;
+        setUserId(uid);
 
-          // Logika naik level (urutan Python → JS → React → Laravel)
-          let level = 1;
-          if ((data["pythonScore"] ?? 0) >= 6) {
-            level = 2;
-            if ((data["jsScore"] ?? 0) >= 6) {
-              level = 3;
-              if ((data["reactScore"] ?? 0) >= 6) {
-                level = 4;
-                if ((data["laravelScore"] ?? 0) >= 6) {
-                  level = 5;
-                }
-              }
-            }
-          }
-          setUserLevel(level);
+        const quizRef = doc(db, 'quizResults', uid);
+        const userRef = doc(db, 'users', uid);
+
+        const [quizSnap, userSnap] = await Promise.all([
+          getDoc(quizRef),
+          getDoc(userRef),
+        ]);
+
+        let data = quizSnap.exists() ? (quizSnap.data() as Record<string, number>) : {};
+        setScores(data);
+
+        let currentLevel = typeof userSnap.data()?.level === 'number' ? userSnap.data()!.level : 1;
+
+        // 🚀 Logika naik level
+        if (currentLevel < 2 && (data.htmlScore ?? 0) >= 6 && (data.cssScore ?? 0) >= 6) {
+          currentLevel = 2;
         }
+        if (currentLevel < 3 && (data.pythonScore ?? 0) >= 6) {
+          currentLevel = 3;
+        }
+        if (currentLevel < 4 && (data.jsScore ?? 0) >= 6) {
+          currentLevel = 4;
+        }
+        if (currentLevel < 5 && (data.reactScore ?? 0) >= 6) {
+          currentLevel = 5;
+        }
+        if (currentLevel < 6 && (data.laravelScore ?? 0) >= 6) {
+          currentLevel = 6;
+        }
+
+        setUserLevel(currentLevel);
+
+        // Simpan ke /users/{uid}
+        await setDoc(userRef, { level: currentLevel }, { merge: true });
       }
     });
 
@@ -117,7 +132,7 @@ export default function MateriPage() {
         Mulailah perjalanan belajarmu dari dasar hingga mahir dengan berbagai topik pemrograman populer.
       </p>
       <p className="text-gray-400 mt-1 text-base">
-        Level kamu saat ini:{" "}
+        Level kamu saat ini:{' '}
         <span className="text-sky-400 font-semibold">Level {userLevel}</span>
       </p>
 
@@ -129,10 +144,10 @@ export default function MateriPage() {
           return (
             <div
               key={idx}
-              className={`relative bg-white text-gray-800 border p-5 rounded-xl transition duration-200 ${
+              className={`relative border p-5 rounded-xl transition duration-200 ${
                 isLocked
-                  ? "opacity-50 border-gray-300 cursor-not-allowed"
-                  : "hover:shadow-lg hover:border-blue-500"
+                  ? 'opacity-50 border-gray-300 cursor-not-allowed bg-gray-100 text-gray-600'
+                  : 'hover:shadow-lg border-blue-400 bg-white text-gray-800'
               }`}
             >
               <div className="flex items-center gap-4 mb-3">
@@ -147,7 +162,7 @@ export default function MateriPage() {
 
               {userId && (
                 <p className="text-sm font-semibold text-green-600">
-                  Skor: {score !== null ? score : "-"}
+                  Skor: {score !== null ? score : '-'}
                 </p>
               )}
 

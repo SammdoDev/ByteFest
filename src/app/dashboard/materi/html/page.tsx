@@ -33,7 +33,7 @@ const htmlTopics = [
   {
     title: "Formulir",
     description: "Membuat daftar (ordered/unordered) dan tabel HTML.",
-    slug: "list-table",
+    slug: "form",
   },
 ];
 

@@ -2,98 +2,95 @@
 
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import QuizLayout from "../components/QuizLayout";
+import QuizOption from "../components/QuizOption";
+import QuizFinish from "../components/QuizFinish";
 
 const questions = [
-  {
-    question: "Apa singkatan dari CSS?",
-    options: ["Creative Style System", "Cascading Style Sheets", "Color Style Sheet", "Central Style Sheet"],
-    answer: 1,
-  },
-  {
-    question: "Property CSS untuk mengubah warna teks adalah...",
-    options: ["font-color", "text-style", "color", "text-color"],
-    answer: 2,
-  },
-  {
-    question: "Selector CSS yang digunakan untuk memilih semua elemen dengan class 'box' adalah...",
-    options: [".box", "#box", "box", "*box"],
-    answer: 0,
-  },
+  { question: "Properti CSS untuk mengubah warna teks?", options: ["background", "text-color", "font-color", "color"], answer: "color" },
+  { question: "Properti untuk memberi jarak di dalam elemen?", options: ["margin", "gap", "padding", "spacing"], answer: "padding" },
+  { question: "Selektor untuk memilih elemen dengan id 'header'?", options: ["#header", ".header", "header", "$header"], answer: "#header" },
+  { question: "Properti untuk mengatur ukuran huruf?", options: ["font-size", "size", "text-size", "font"], answer: "font-size" },
+  { question: "Nilai properti 'display' untuk membuat flex container?", options: ["block", "inline", "grid", "flex"], answer: "flex" },
+  { question: "Properti untuk memberi garis di sekitar elemen?", options: ["border", "outline", "box", "frame"], answer: "border" },
+  { question: "Selector untuk semua elemen paragraf?", options: ["#p", "p", ".p", "<p>"], answer: "p" },
+  { question: "Properti untuk mengatur jarak luar elemen?", options: ["spacing", "margin", "padding", "gap"], answer: "margin" },
+  { question: "Unit CSS untuk persentase ukuran?", options: ["px", "em", "%", "rem"], answer: "%" },
+  { question: "Properti untuk mengatur latar belakang elemen?", options: ["color", "background", "bg", "fill"], answer: "background" },
 ];
 
-export default function CssQuizPage() {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+export default function QuizCss() {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUserId(user?.uid ?? null);
     });
-    return () => unsub();
+    return () => unsubscribe();
   }, []);
 
-  const handleAnswer = (index: number, selected: number) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = selected;
-    setAnswers(newAnswers);
-  };
+  const handleNext = async () => {
+    if (selected === questions[current].answer) {
+      setScore((prev) => prev + 1);
+    }
+    setSelected(null);
 
-  const handleSubmit = async () => {
-    let newScore = 0;
-    questions.forEach((q, i) => {
-      if (answers[i] === q.answer) newScore++;
-    });
-    setScore(newScore);
-    setSubmitted(true);
-
-    if (currentUser) {
-      const docRef = doc(db, "quizResults", currentUser.uid);
-      const prevData = (await getDoc(docRef)).data() || {};
-      await setDoc(docRef, { ...prevData, cssScore: newScore }, { merge: true });
+    if (current + 1 < questions.length) {
+      setCurrent((prev) => prev + 1);
+    } else {
+      setFinished(true);
+      if (userId) {
+        await setDoc(
+          doc(db, "quizResults", userId),
+          {
+            cssScore: score + (selected === questions[current].answer ? 1 : 0),
+            updatedAt: new Date(),
+          },
+          { merge: true }
+        );
+      }
     }
   };
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">Kuis CSS</h1>
+    <QuizLayout title="Kuis CSS">
+      {finished ? (
+        <QuizFinish score={score} total={questions.length} />
+      ) : (
+        <>
+          <p className="text-lg font-medium mb-4">
+            Soal {current + 1} dari {questions.length}
+          </p>
+          <h2 className="text-xl font-semibold text-gray-50 mb-4">
+            {questions[current].question}
+          </h2>
 
-      {questions.map((q, i) => (
-        <div key={i} className="mb-6">
-          <p className="font-semibold">{i + 1}. {q.question}</p>
-          <div className="space-y-2 mt-2">
-            {q.options.map((opt, j) => (
-              <label key={j} className="block">
-                <input
-                  type="radio"
-                  name={`question-${i}`}
-                  className="mr-2"
-                  disabled={submitted}
-                  checked={answers[i] === j}
-                  onChange={() => handleAnswer(i, j)}
-                />
-                {opt}
-              </label>
+          <div className="space-y-3">
+            {questions[current].options.map((option, i) => (
+              <QuizOption
+                key={i}
+                option={option}
+                isSelected={selected === option}
+                onClick={() => setSelected(option)}
+              />
             ))}
           </div>
-        </div>
-      ))}
 
-      {!submitted ? (
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-        >
-          Submit Jawaban
-        </button>
-      ) : (
-        <p className="text-green-600 text-lg font-semibold mt-4">
-          Skor kamu: {score} dari {questions.length}
-        </p>
+          <button
+            onClick={handleNext}
+            disabled={!selected}
+            className="mt-6 bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50"
+          >
+            {current === questions.length - 1 ? "Lihat Hasil" : "Selanjutnya"}
+          </button>
+        </>
       )}
-    </main>
+    </QuizLayout>
   );
 }

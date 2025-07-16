@@ -1,23 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import CardMateri from "../../components/CardMateri";
 
 export default function ListTablePage() {
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-blue-600 mb-4">List & Table</h1>
-
-      <p className="text-gray-700 mb-4">
+    <CardMateri
+      title="List & Table"
+      prevHref="/dashboard/materi/html/link-gambar"
+      nextHref="/dashboard/materi/html/form"
+    >
+      <p className="text-white mb-4">
         HTML menyediakan tag khusus untuk membuat daftar (list) dan tabel (table) guna menyusun data dengan lebih rapi.
       </p>
 
       {/* LIST */}
       <h2 className="text-2xl font-semibold text-blue-500 mb-2">1. Daftar (List)</h2>
-      <p className="text-gray-700 mb-2">
-        Ada dua jenis list di HTML:
-      </p>
-      <ul className="list-disc pl-6 text-gray-700 mb-2">
+      <p className="text-white mb-2">Ada dua jenis list di HTML:</p>
+      <ul className="list-disc pl-6 text-white mb-2">
         <li><strong>Unordered List</strong>: menggunakan <code>&lt;ul&gt;</code> dan <code>&lt;li&gt;</code></li>
         <li><strong>Ordered List</strong>: menggunakan <code>&lt;ol&gt;</code> dan <code>&lt;li&gt;</code></li>
       </ul>
@@ -36,8 +35,8 @@ export default function ListTablePage() {
 </ol>`}</code>
       </pre>
 
-      <p className="text-gray-700">Contoh tampilan:</p>
-      <div className="bg-gray-50 p-4 border rounded mb-6">
+      <p className="text-white">Contoh tampilan:</p>
+      <div className="bg-gray-800 p-4 rounded mb-6 text-white">
         <ul className="list-disc pl-6 mb-4">
           <li>HTML</li>
           <li>CSS</li>
@@ -52,7 +51,7 @@ export default function ListTablePage() {
 
       {/* TABLE */}
       <h2 className="text-2xl font-semibold text-blue-500 mb-2">2. Tabel (Table)</h2>
-      <p className="text-gray-700 mb-2">
+      <p className="text-white mb-2">
         Untuk menampilkan data dalam bentuk baris dan kolom, gunakan <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>,
         <code>&lt;th&gt;</code>, dan <code>&lt;td&gt;</code>:
       </p>
@@ -74,8 +73,8 @@ export default function ListTablePage() {
 </table>`}</code>
       </pre>
 
-      <p className="text-gray-700">Contoh tampilan:</p>
-      <div className="bg-gray-50 p-4 border rounded overflow-auto">
+      <p className="text-white">Contoh tampilan:</p>
+      <div className="bg-gray-800 p-4 border rounded overflow-auto text-black">
         <table className="min-w-full border border-gray-300 text-left text-sm">
           <thead>
             <tr className="bg-gray-100">
@@ -83,7 +82,7 @@ export default function ListTablePage() {
               <th className="border border-gray-300 px-4 py-2">Skill</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-white">
             <tr>
               <td className="border border-gray-300 px-4 py-2">Ani</td>
               <td className="border border-gray-300 px-4 py-2">HTML</td>
@@ -95,23 +94,6 @@ export default function ListTablePage() {
           </tbody>
         </table>
       </div>
-
-      {/* Navigasi */}
-      <div className="mt-10 flex justify-between">
-        <Link
-          href="/dashboard/materi/html/link-gambar"
-          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline"
-        >
-          <FaArrowLeft /> Sebelumnya
-        </Link>
-
-        <Link
-          href="/dashboard/materi/html/form"
-          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline"
-        >
-          Selanjutnya<FaArrowRight />
-        </Link>
-      </div>
-    </main>
+    </CardMateri>
   );
 }

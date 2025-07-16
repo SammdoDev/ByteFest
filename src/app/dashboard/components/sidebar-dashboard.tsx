@@ -122,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         <Link
-          href="/dahshboard/kuis"
+          href="/dashboard/kuis"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaClipboardList className="text-xl" />
