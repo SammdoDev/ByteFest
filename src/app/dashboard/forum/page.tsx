@@ -39,7 +39,6 @@ export default function ForumChat() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // 1. Listen for auth state
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -54,7 +53,6 @@ export default function ForumChat() {
     return () => unsub();
   }, []);
 
-  // Handle scroll detection with debounce
   const handleScroll = () => {
     const container = messagesContainerRef.current;
     if (!container) return;
@@ -66,7 +64,6 @@ export default function ForumChat() {
     setShowScrollButton(!isAtBottom);
   };
 
-  // Debounced scroll handler
   useEffect(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
@@ -84,7 +81,6 @@ export default function ForumChat() {
     };
   }, []);
 
-  // 2. Listen for messages
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
     const unsub = onSnapshot(q, async (snap) => {
@@ -93,7 +89,6 @@ export default function ForumChat() {
           const data = docSnap.data() as Msg;
           let username = data.username;
 
-          // If username not stored, try to fetch
           if (!username && data.uid) {
             try {
               const userDoc = await getDoc(doc(db, "users", data.uid));
@@ -120,7 +115,6 @@ export default function ForumChat() {
 
       setMessages(data);
 
-      // Auto-scroll logic
       if (wasAtBottom || (isNewMessage && isOwnMessage)) {
         setTimeout(() => {
           bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -131,7 +125,6 @@ export default function ForumChat() {
     return () => unsub();
   }, [isUserAtBottom, userUid, messages.length]);
 
-  // 3. Send message
   const sendMessage = async () => {
     if (!input.trim() || !userUid || !userName) return;
 
@@ -148,7 +141,6 @@ export default function ForumChat() {
     }
   };
 
-  // Scroll to bottom manually
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };

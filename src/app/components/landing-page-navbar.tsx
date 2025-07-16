@@ -20,7 +20,6 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onChangeSection }) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionKey>("beranda");
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);

@@ -15,7 +15,6 @@ const PromoSection: React.FC = () => {
   return (
     <section id="promo" className="bg-white py-20 px-6 md:px-12 text-gray-800">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-        {/* Left: Image */}
         <div className="w-full md:w-1/2">
           <Image
             src="/full-stack.png"
@@ -26,7 +25,6 @@ const PromoSection: React.FC = () => {
           />
         </div>
 
-        {/* Right: Text Content */}
         <div className="w-full md:w-1/2">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
             Belajar Lebih Seru & Efisien di CodeWithSamm
@@ -35,7 +33,6 @@ const PromoSection: React.FC = () => {
             Kami hadir untuk menjadikan proses belajar pemrograman jadi lebih mudah, cepat, dan menyenangkan untuk semua kalangan.
           </p>
 
-          {/* Benefit List */}
           <ul className="space-y-4 mb-8">
             {benefits.map((item, idx) => (
               <li key={idx} className="flex items-start gap-3">
@@ -45,7 +42,6 @@ const PromoSection: React.FC = () => {
             ))}
           </ul>
 
-          {/* CTA Button */}
           <a
             href="#modul"
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"

@@ -90,7 +90,6 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
       </button>
 
       <div className="flex items-center gap-4">
-        {/* Toggle Theme */}
         <button
           onClick={toggleDarkMode}
           className="text-muted-foreground hover:text-primary p-2 rounded-full hover:bg-accent transition-colors"
@@ -99,7 +98,6 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
           {darkMode ? <FaSun size={18} /> : <FaMoon size={18} />}
         </button>
 
-        {/* User Menu */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}

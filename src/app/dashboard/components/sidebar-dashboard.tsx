@@ -9,11 +9,12 @@ import {
   FaSignOutAlt,
   FaTimes,
   FaUser,
+  FaArrowLeft,
 } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-  import { signOut } from "firebase/auth";
-  import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -22,7 +23,6 @@ type SidebarProps = {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const router = useRouter();
-
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -74,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             alt="Eduverse Logo"
             className={`object-contain ${isOpen ? "h-8" : "h-8 w-8 mx-auto "}`}
           />
-          {isOpen && <h2 className="text-xl font-bold">Eduverse</h2>}
+          {isOpen && <h2 className="text-xl font-bold">CodeWithSamm</h2>}
         </div>
 
         <button
@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         <Link
-          href="/materi"
+          href="/dashboard/materi"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaUserGraduate className="text-xl" />
@@ -122,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         <Link
-          href="/"
+          href="/dahshboard/kuis"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaClipboardList className="text-xl" />
@@ -137,7 +137,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </span>
         </Link>
         <Link
-          href="/progress"
+          href="/dashboard/peringkat"
           className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
         >
           <FaChartLine className="text-xl" />
@@ -165,6 +165,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     `}
           >
             Forum
+          </span>
+        </Link>
+        <Link
+          href="/"
+          className="flex items-center gap-4 hover:bg-blue-600 p-2 rounded transition-all"
+        >
+          <FaArrowLeft className="text-xl" />
+          <span
+            className={`
+      transition-all duration-200 
+      ${isOpen ? "inline-block" : "hidden"} 
+      md:${isOpen ? "inline-block" : "hidden"}
+    `}
+          >
+            Kembali ke halaman utama
           </span>
         </Link>
 
