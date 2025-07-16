@@ -60,8 +60,8 @@ export default function DashboardLayout({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="bg-white dark:bg-white shadow-md rounded-lg p-6 w-80 md:w-130 text-center">
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="bg-white dark:bg-white shadow-md shadow-black rounded-lg p-6 w-80 md:w-130 text-center">
           <p className="mb-4 text-black font-semibold">
             Satu Baris Kode, Satu Langkah Lebih Dekat ke Impian...
           </p>

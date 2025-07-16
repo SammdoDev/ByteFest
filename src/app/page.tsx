@@ -63,7 +63,7 @@ export default function HomePage() {
         >
           <div className="w-64 h-4 bg-gray-700 rounded-full overflow-hidden mb-4 relative">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-stripes"
+              className="h-full bg-blue-500 animate-stripes"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
