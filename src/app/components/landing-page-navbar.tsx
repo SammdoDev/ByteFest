@@ -134,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onChangeSection }) => {
       </div>
 
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${
-        mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        mobileMenuOpen ? "max-h-114 opacity-100" : "max-h-0 opacity-0"
       }`}>
         <div className="mt-4 space-y-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-4">
           {menuItems.map(({ key, label }) => (

@@ -26,7 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const [isSidebarLocked, setIsSidebarLocked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Gabungan kondisi tampilan sidebar desktop dan mobile
   const isSidebarVisible = isOpen || isHovered || isSidebarLocked;
 
   const handleLogout = async () => {
@@ -72,13 +71,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       onMouseLeave={() => !isSidebarLocked && setIsHovered(false)}
     >
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center space-x-2 justify-center">
+        <div
+          className={`flex items-center ${
+            isSidebarVisible ? "justify-start space-x-2" : "justify-center ml-2"
+          }`}
+        >
           <img
             src="/logo.png"
             alt="Eduverse Logo"
-            className={`object-contain ${isSidebarVisible ? "h-8" : "h-8 w-8 mx-auto"}`}
+            className="h-8 w-8 object-contain"
           />
-          {isSidebarVisible && <h2 className="text-xl font-bold">CodeWithSamm</h2>}
+          {isSidebarVisible && (
+            <h2 className="text-xl font-bold">CodeWithSamm</h2>
+          )}
         </div>
 
         <div className="flex items-center space-x-2">
@@ -98,8 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 onChange={(e) => setIsSidebarLocked(e.target.checked)}
                 id="lockSidebar"
               />
-              <label htmlFor="lockSidebar" className="text-sm">
-              </label>
+              <label htmlFor="lockSidebar" className="text-sm"></label>
             </div>
           )}
         </div>
@@ -108,12 +112,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       <hr className="bg-gray-100 h-[1px] w-full mb-4" />
 
       <nav className="space-y-4">
-        <NavItem href="/dashboard" icon={<FaHome className="text-xl" />} label="Beranda" />
-        <NavItem href="/dashboard/materi" icon={<FaBook className="text-xl" />} label="Materi" />
-        <NavItem href="/dashboard/kuis" icon={<FaClipboardList className="text-xl" />} label="Kuis" />
-        <NavItem href="/dashboard/peringkat" icon={<FaChartLine className="text-xl" />} label="Peringkat" />
-        <NavItem href="/dashboard/forum" icon={<FaCommentDots className="text-xl" />} label="Forum" />
-        <NavItem href="/" icon={<FaArrowLeft className="text-xl" />} label="Halaman Utama" />
+        <NavItem
+          href="/dashboard"
+          icon={<FaHome className="text-xl" />}
+          label="Beranda"
+        />
+        <NavItem
+          href="/dashboard/materi"
+          icon={<FaBook className="text-xl" />}
+          label="Materi"
+        />
+        <NavItem
+          href="/dashboard/kuis"
+          icon={<FaClipboardList className="text-xl" />}
+          label="Kuis"
+        />
+        <NavItem
+          href="/dashboard/peringkat"
+          icon={<FaChartLine className="text-xl" />}
+          label="Peringkat"
+        />
+        <NavItem
+          href="/dashboard/forum"
+          icon={<FaCommentDots className="text-xl" />}
+          label="Forum"
+        />
+        <NavItem
+          href="/"
+          icon={<FaArrowLeft className="text-xl" />}
+          label="Halaman Utama"
+        />
 
         <div
           onClick={handleLogout}
