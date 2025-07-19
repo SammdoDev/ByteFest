@@ -47,10 +47,6 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
     router.push("/auth/login");
   };
 
-  const goToProfile = () => {
-    router.push("/profil");
-  };
-
 
   if (!mounted) {
     return (
@@ -76,7 +72,7 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
     <nav className="bg-card shadow-md px-6 py-4 flex justify-between items-center w-full border-b-1 border-border">
       <button
         onClick={onToggleSidebar}
-        className="text-primary hover:text-primary/80 transition-colors"
+        className="text-primary block md:hidden hover:text-primary/80 transition-colors"
       >
         <FaBars size={20} />
       </button>
@@ -99,7 +95,6 @@ const NavbarDashboard = ({ onToggleSidebar }: NavbarProps) => {
           {dropdownOpen && (
             <div className="absolute bg-black right-0 mt-2 w-44 shadow-lg rounded-md z-10">
               <button
-                onClick={goToProfile}
                 className="block w-full text-left px-4 py-2 text-sm text-popover-foreground hover:bg-accent transition-colors"
               >
                 My Profile / {userName}

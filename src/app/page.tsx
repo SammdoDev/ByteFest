@@ -7,11 +7,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import Navbar from "./components/landing-page-navbar";
 import LandingPageContent from "./pages/landing-page-content";
+import Script from "next/script";
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [section, setSection] = useState<
-    "beranda" | "about" | "promo" | "modul"
+    "beranda" | "about" | "benefits" | "modul" | "membership" | "review"
   >("beranda");
   const [showLanding, setShowLanding] = useState(false);
   const [progress, setProgress] = useState(0);

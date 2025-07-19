@@ -47,7 +47,7 @@ const ModuleSection: React.FC = () => {
   return (
     <section id="modul" className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl text-black md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl text-black md:text-4xl font-bold mb-2">
           Modul Pembelajaran
         </h2>
         <p className="text-gray-400 mb-12">
@@ -60,7 +60,7 @@ const ModuleSection: React.FC = () => {
             {modules.map((modul, i) => (
               <div
                 key={i}
-                className="min-w-[250px] md:min-w-0 bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-blue-500/20 transition"
+                className="flex justify-center items-center flex-col min-w-[250px] md:min-w-0 bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-blue-500/20 transition"
               >
                 <div className="mb-4">{modul.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{modul.title}</h3>

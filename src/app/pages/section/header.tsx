@@ -54,7 +54,7 @@ const HeaderSection: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-5xl w-full text-center">
-        <h1 className="text-2xl md:text-5xl font-black leading-tight mb-6 py-8 bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-5xl font-black leading-tight mb-6 py-8 bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">
           Mulai Coding, Bangun Masa Depanmu bersama
           <span className="block text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text mt-2">
             CodeWithSamm
@@ -66,16 +66,16 @@ const HeaderSection: React.FC = () => {
           menyenangkan dengan mentor berpengalaman
         </p>
 
-        <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm">
-          <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-6 mb-10 text-sm">
+          <div className="w-full md:w-auto flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm justify-center">
             <FaUsers className="text-blue-400" />
             <span className="text-gray-300">1000+ Siswa</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm">
+          <div className="w-full md:w-auto flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm justify-center">
             <FaCode className="text-purple-400" />
             <span className="text-gray-300">3+ Modul Pembelajaran</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm">
+          <div className="w-full md:w-auto flex items-center gap-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm justify-center">
             <FaRocket className="text-cyan-400" />
             <span className="text-gray-300">95% Success Rate</span>
           </div>
@@ -97,8 +97,8 @@ const HeaderSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col items-center cursor-pointer animate-bounce">
-          <button 
-            onClick={handleScrollDown} 
+          <button
+            onClick={handleScrollDown}
             aria-label="Scroll ke bawah"
             className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
           >
@@ -109,7 +109,6 @@ const HeaderSection: React.FC = () => {
           </button>
         </div>
       </div>
-
     </section>
   );
 };

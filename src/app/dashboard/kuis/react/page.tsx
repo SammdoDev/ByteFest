@@ -22,7 +22,7 @@ const questions = [
 ];
 
 
-export default function QuizJs() {
+export default function QuizReact() {
   const [userId, setUserId] = useState<string | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -49,7 +49,7 @@ export default function QuizJs() {
         await setDoc(
           doc(db, "quizResults", userId),
           {
-            jsScore: score + (selected === questions[current].answer ? 1 : 0),
+            reactScore: score + (selected === questions[current].answer ? 1 : 0),
             updatedAt: new Date(),
           },
           { merge: true }
@@ -59,9 +59,9 @@ export default function QuizJs() {
   };
 
   return (
-    <QuizLayout title="Kuis JavaScript">
+    <QuizLayout title="Kuis React">
       {finished ? (
-        <QuizFinish topic="JavaScript" score={score} total={questions.length} />
+        <QuizFinish topic="react" score={score} total={questions.length} />
       ) : (
         <>
           <p className="text-lg font-medium mb-4">Soal {current + 1} dari {questions.length}</p>

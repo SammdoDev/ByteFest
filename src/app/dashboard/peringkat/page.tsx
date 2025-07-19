@@ -48,7 +48,6 @@ const LeaderboardPage: React.FC = () => {
           const d = q.data() as Record<string, any>;
           const uid = q.id;
 
-          // Ambil nama user dari /users/{uid}
           let username = "Guest";
           try {
             const userSnap = await getDoc(doc(db, "users", uid));
@@ -57,9 +56,7 @@ const LeaderboardPage: React.FC = () => {
               username =
                 uData.username || uData.name || uData.displayName || "Guest";
             }
-          } catch {
-            // abaikan error
-          }
+          } catch {}
 
           const html = d.htmlScore ?? 0;
           const css = d.cssScore ?? 0;
@@ -112,7 +109,7 @@ const LeaderboardPage: React.FC = () => {
 
       <div className="overflow-x-auto rounded-xl border border-gray-300">
         <table className="min-w-[800px] w-full text-sm text-left border-collapse">
-          <thead className="text-gray-100 border-b border-gray-300 sticky top-0 z-10">
+          <thead className="bg-transparent border-b text-white sticky top-0 z-10">
             <tr>
               <th className="py-2 px-3 border-r">#</th>
               <th className="py-2 px-3 border-r">Username</th>
@@ -126,40 +123,51 @@ const LeaderboardPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {leaders.map((row, idx) => (
-              <tr
-                key={row.uid}
-                className={row.uid === currentUid ? "font-semibold" : ""}
-              >
-                <td className="py-2 px-3 border-t border-gray-200">
-                  {idx + 1}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200">
-                  {row.username}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.html}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.css}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.python}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.js}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.react}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center">
-                  {row.laravel}
-                </td>
-                <td className="py-2 px-3 border-t border-gray-200 text-center font-semibold">
-                  {row.total}
+            {leaders.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={9}
+                  className="text-center text-gray-500 py-6 italic"
+                >
+                  Tidak ada data leaderboard yang tersedia.
                 </td>
               </tr>
-            ))}
+            ) : (
+              leaders.map((row, idx) => (
+                <tr
+                  key={row.uid}
+                  className={row.uid === currentUid ? "font-semibold" : ""}
+                >
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {idx + 1}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200">
+                    {row.username}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.html}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.css}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.python}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.js}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.react}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center">
+                    {row.laravel}
+                  </td>
+                  <td className="py-2 px-3 border-t border-gray-200 text-center font-semibold">
+                    {row.total}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

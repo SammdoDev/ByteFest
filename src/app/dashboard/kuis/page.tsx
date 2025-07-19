@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 
 type QuizScore = {
   htmlScore?: number;
@@ -34,37 +34,40 @@ const topics = [
   },
 ];
 
-export default function KuisPage() {
+const KuisPage: React.FC = () => {
   const [scores, setScores] = useState<QuizScore>({});
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (user) {
         setUserId(user.uid);
         const docRef = doc(db, "quizResults", user.uid);
-        const snap = await getDoc(docRef);
 
-        if (snap.exists()) {
-          const data = snap.data() as QuizScore;
-          setScores(data);
+        const unsubscribeDoc = onSnapshot(docRef, async (snap) => {
+          if (snap.exists()) {
+            const data = snap.data() as QuizScore;
+            setScores(data);
 
-          let level = 1;
-          if ((data.htmlScore ?? 0) >= 6 && (data.cssScore ?? 0) >= 6)
-            level = 2;
-          if (level >= 2 && (data.pythonScore ?? 0) >= 6) level = 3;
-          if (level >= 3 && (data.jsScore ?? 0) >= 6) level = 4;
-          if (level >= 4 && (data.reactScore ?? 0) >= 6) level = 5;
-          if (level >= 5 && (data.laravelScore ?? 0) >= 6) level = 6;
+            let level = 1;
+            if ((data.htmlScore ?? 0) >= 6 && (data.cssScore ?? 0) >= 6)
+              level = 2;
+            if (level >= 2 && (data.pythonScore ?? 0) >= 6) level = 3;
+            if (level >= 3 && (data.jsScore ?? 0) >= 6) level = 4;
+            if (level >= 4 && (data.reactScore ?? 0) >= 6) level = 5;
+            if (level >= 5 && (data.laravelScore ?? 0) >= 6) level = 6;
 
-          if (level > (data.level ?? 1)) {
-            await setDoc(docRef, { level }, { merge: true });
+            if (level > (data.level ?? 1)) {
+              await setDoc(docRef, { level }, { merge: true });
+            }
           }
-        }
+        });
+
+        return unsubscribeDoc;
       }
     });
 
-    return () => unsubscribe();
+    return () => unsubscribeAuth();
   }, []);
 
   return (
@@ -110,4 +113,6 @@ export default function KuisPage() {
       </div>
     </main>
   );
-}
+};
+
+export default KuisPage;

@@ -7,7 +7,7 @@ import { auth } from "@/lib/firebase";
 import { FaBars, FaTimes  } from "react-icons/fa";
 import { Button } from "primereact/button";
 
-type SectionKey = "beranda" | "about" | "promo" | "modul";
+type SectionKey = "beranda" | "about" | "benefits" | "modul" | "membership" | "review";
 
 type NavbarProps = {
   isLoggedIn: boolean;
@@ -48,8 +48,10 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onChangeSection }) => {
   const menuItems = [
     { key: "beranda", label: "Beranda" },
     { key: "about", label: "Tentang Kami" },
-    { key: "promo", label: "Promo" },
+    { key: "benefits", label: "Benefits" },
     { key: "modul", label: "Modul" },
+    { key: "membership", label: "Membership" },
+    { key: "review", label: "Review" },
   ];
 
   return (
